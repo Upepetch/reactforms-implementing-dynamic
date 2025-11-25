@@ -4,15 +4,29 @@ import { FormButton } from './FormButton';
 
 
 export const AppForm = ({addNewJob}) => {
- const [title, setTitle] = useState('');
- const [status, setStatus]= useState('Need to Start');
+ const [jobDetails, setJobDetails] = useState({
+  title: '',
+  category: '',
+  status: 'To Start'
+ });
+
+ const categories = ['Read Emails', 'Web Parsing', 'Send Emails'];
+ const statuses = ['To Start', 'In Progress', 'Completed'];
+
+
+ const handleInputChange = (e) => {
+  const {name, value} = e.target;
+  setJobDetails(prev => ({
+    ...prev,
+    [name] : value
+  }));
+ };
 
  const handleSubmit = (e) => {
   e.preventDefault();
-  if (title.trim()) {
-    addNewJob(title, status)
-    setTitle('');
-    setStatus('Need to Start');
+  if (jobDetails.title.trim()) {
+    addNewJob(jobDetails.title, jobDetails.status);
+    setJobDetails({title: '', category:'', status: 'To Start'});
     
   }
  };
@@ -20,27 +34,38 @@ export const AppForm = ({addNewJob}) => {
   return (
     <div className='form-header'>
         <form onSubmit={handleSubmit}>
-            <input type="text" className='bot-in' placeholder='Enter the job' value={title}
-             onChange={(e) => setTitle(e.target.value)}
+            <input 
+              type="text" 
+              name='title' 
+              className='bot-in' 
+              placeholder='Enter the job' 
+              value={jobDetails.title}
+             onChange={handleInputChange}
             />
 
             <div className='form-details'>
                 <div className='bottom-line'>
-                 <FormButton value='Read Emails'onClick={() => addNewJob('Read Emails')}/>
-                 <FormButton value='Web Parsing'onClick={() => addNewJob('Web Parsing')}/>
-                 <FormButton value='Send Emails'onClick={() => addNewJob('Send Emails')}/>
-        
+                  {categories.map(cat => (
+                    <FormButton 
+                      key={cat}
+                      value={cat}
+                      onClick={() => setJobDetails(prev => ({...prev, category: cat}))}
+                    />
+                    ))}
                 </div>
                 <select 
+                  name='status'
                   className='job-status'
-                  value={status}
-                  onChange={(e) => setStatus(e.target.value)}
+                  value={jobDetails.status}
+                  onChange={handleInputChange}
                 >
-                    <option value="start">Start process</option>
-                    <option value="running">Run process</option>
-                    <option value="stopped">Stop process</option>
+                   {statuses.map(st => (
+                     <option key={st} value={st}>{st}</option>
+                   ))}
+                   
+                  
                 </select>
-                <button type='submit' className='submit-data' onClick={addNewJob}>Add Job</button>
+                <button type='submit' className='submit-data'>Add Job</button>
             </div>
         </form>
 
