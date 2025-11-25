@@ -1,0 +1,106 @@
+html, body{
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* margin: 0; - to reset */
+}
+
+.jobStateArt {
+  width: 100%;
+  min-height: 100px;
+  border: 1px solid #3443;
+  padding: 20px;
+  margin: 20px 0px;
+}
+
+
+.textArticle {
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.jobStatBox {
+  display: flex;
+}
+
+
+
+
+
+
+.jobStatBox {
+  background: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+
+  /* animation */
+  transition: all 0.3s ease-in-out;
+}
+
+.jobStatBox-enter {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.jobStatBox-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.jobStatBox-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.jobStatBox-exit-active {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+
+
+
+
+
+.jobStatBox select {
+  margin-right: 0.2rem;
+  padding: 0.2rem;
+  font-size: 0.5rem;
+}
+
+.jobBox {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.jobDelete {
+  width: 30px;
+  height: 30px;
+  border-radius: 95%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+
+}
+
+.deleteImage {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+  transition: all 0.3s ease-in-out;
+  opacity: 40%;
+}
+
+footer {
+  background-color: #222;
+  margin-top: auto;
+  color: white;
+  text-align: center;
+  padding: 10px;
+} 

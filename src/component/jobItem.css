@@ -1,0 +1,23 @@
+html, body{
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* margin: 0; - to reset */
+}
+
+.job-item {
+  flex-grow: 1;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #333;
+}
+
+
+footer {
+  background-color: #222;
+  margin-top: auto;
+  color: white;
+  text-align: center;
+  padding: 10px;
+} 
