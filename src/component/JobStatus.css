@@ -18,15 +18,21 @@ html, body{
 .textArticle {
   font-size: 14px;
   font-weight: normal;
+  margin-bottom: 10px;
 }
 
 .jobStatBox {
   display: flex;
 }
 
-
-
-
+.category-badge {
+  /* background-color: #e0fff0; */
+  color: #0077cc;
+  padding: 2px 40px;
+  border: 1px solid #000;
+  font-size: 0.6rem;
+  margin-left: 6px;
+}
 
 
 .jobStatBox {
@@ -61,10 +67,6 @@ html, body{
 }
 
 
-
-
-
-
 .jobStatBox select {
   margin-right: 0.2rem;
   padding: 0.2rem;
@@ -89,12 +91,19 @@ html, body{
 
 }
 
+
+.edit-btn {
+  border: none;
+  font-weight: bold;
+  padding: 4px 8px;
+}
+
 .deleteImage {
   width: 16px;
   height: 16px;
   object-fit: contain;
   transition: all 0.3s ease-in-out;
-  opacity: 40%;
+  opacity: 100%;
 }
 
 footer {

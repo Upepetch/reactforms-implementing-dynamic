@@ -3,7 +3,7 @@ import './JobColumn.css';
 import { JobStatus } from './JobStatus';
 
 
-export const JobColumn = ({status, imageIcon, jobs, deleteJob, updateJobStatus}) => {
+export const JobColumn = ({status, imageIcon, jobs, deleteJob, updateJobStatus, editJob}) => {
   return (
     <section className='column1'>
       <h2 className='heading-status'>{status}</h2>
@@ -14,6 +14,7 @@ export const JobColumn = ({status, imageIcon, jobs, deleteJob, updateJobStatus})
              job={job} 
              deleteJob={deleteJob}
              updateJobStatus={updateJobStatus}
+             editJob={editJob}
             />
           ))}
 

@@ -2,16 +2,36 @@ import React, { useState } from 'react';
 import './AppForm.css';
 import { FormButton } from './FormButton';
 
-
-export const AppForm = ({addNewJob}) => {
- const [jobDetails, setJobDetails] = useState({
+// Define the initial state once
+const initialJobDetails = {
   title: '',
   category: '',
-  status: 'To Start'
- });
+  status: 'Need to Start'
+};
+
+
+export const AppForm = ({addNewJob}) => {
+ const [jobDetails, setJobDetails] = useState(initialJobDetails);
+
+ // Disable the submit button if any field is empty.
+ const isFormValid = 
+    jobDetails.title.trim().length >= 0 &&
+    jobDetails.category &&
+    jobDetails.status;
+
+ const [error, setError] = useState({});
+
+ // Add visual feedback when a job is successfully added (e.g., a success message).
+ const [success, setSuccess] = useState('');
 
  const categories = ['Read Emails', 'Web Parsing', 'Send Emails'];
- const statuses = ['To Start', 'In Progress', 'Completed'];
+ const statuses = ['Need to Start', 'Work in progress', 'Completed'];
+
+ // Function to reset the form
+ const resetForm = () => {
+  setJobDetails(initialJobDetails);
+  setError('');
+ };
 
 
  const handleInputChange = (e) => {
@@ -20,17 +40,46 @@ export const AppForm = ({addNewJob}) => {
     ...prev,
     [name] : value
   }));
+
+  setError('');
  };
 
  const handleSubmit = (e) => {
   e.preventDefault();
-  if (jobDetails.title.trim()) {
-    addNewJob(jobDetails.title, jobDetails.status);
-    setJobDetails({title: '', category:'', status: 'To Start'});
-    
-  }
- };
 
+  // Implement error handling for each input field (e.g., job title must be at least 3 characters long).
+
+  const newErrors = {};
+
+    console.log("Submitting job:", jobDetails);
+  if (!jobDetails.title.trim()) {
+    newErrors.title = 'Job title is required.'
+  } else if (jobDetails.title.trim().length < 3) {
+     newErrors.title = 'Job title must be at least 3 characters long.'
+  }
+  
+  if (!jobDetails.category) {
+    newErrors.category = 'Please select a category.';
+  }
+  if (!jobDetails.status) {
+    newErrors.category = 'Please select a status.';
+  }
+  if (Object.keys(newErrors).length > 0) {
+    setError(newErrors);
+    return;
+  }
+
+    addNewJob(jobDetails);
+    setSuccess('Job added successfully!')
+    setError({})
+    resetForm();  // use the reset function here  
+
+    // Hide message after 2 seconds
+ setTimeout(() => setSuccess(''), 2000);
+
+ };
+  
+ 
   return (
     <div className='form-header'>
         <form onSubmit={handleSubmit}>
@@ -49,7 +98,11 @@ export const AppForm = ({addNewJob}) => {
                     <FormButton 
                       key={cat}
                       value={cat}
-                      onClick={() => setJobDetails(prev => ({...prev, category: cat}))}
+                      selected={jobDetails.category === cat}
+                      onClick={() => {
+                        setJobDetails(prev => ({...prev, category: cat}));
+                        setError({});
+                      }}
                     />
                     ))}
                 </div>
@@ -63,10 +116,22 @@ export const AppForm = ({addNewJob}) => {
                      <option key={st} value={st}>{st}</option>
                    ))}
                    
-                  
                 </select>
-                <button type='submit' className='submit-data'>Add Job</button>
+                <button 
+                    type='submit'
+                    disabled={!isFormValid} 
+                    className={`submit-data ${!isFormValid ? 'disabled' : ''}`}
+                >
+                  Add Job
+                </button>
             </div>
+
+           {error.title && <p className='message-error'>{error.title}</p>}
+           
+           {error.category && <p className='message-error'>{error.category}</p>}
+           {error.status && <p className='message-error'>{error.status}</p>}
+           {success && <p className='message-success'>{success}</p>}
+
         </form>
 
     </div>

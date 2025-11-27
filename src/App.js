@@ -7,6 +7,7 @@ import { JobColumn } from './component/JobColumn';
 import toDoList from './images/to-do-list.jpg'; 
 import inProgressimg from './images/inprogressImage.png';
 import done from './images/completedImage.jpg';
+import { useEffect } from "react";
 
 
 function App() {
@@ -20,11 +21,26 @@ function App() {
 
  ]);
 
- const addNewJob = (title, status = 'Neeed to Start') => {
+ // Load jobs from localStorage on first render
+useEffect(() => {
+    const storedJobs = localStorage.getItem("jobs");
+    if (storedJobs) {
+      setJobs(JSON.parse(storedJobs));
+    }
+  }, []);
+
+   // Save jobs to localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem("jobs", JSON.stringify(jobs));
+  }, [jobs]);
+
+
+ const addNewJob = (jobDetails) => {
   const newJob = {
     id: crypto.randomUUID(),
-    title,
-    status
+    title: jobDetails.title,
+    category: jobDetails.category,
+    status: jobDetails.status || 'Need to Start'
   };
 
   setJobs(prevJobs => [...prevJobs, newJob]);
@@ -48,7 +64,18 @@ function App() {
        )
     );
  };
+
+
+ const editJob = (id, updatedFields) => {
+  setJobs(prevJobs =>
+    prevJobs.map(job =>
+      job.id === id ?  {...job, ...updatedFields} : job
+    )
+  );
   
+ };
+
+
   return (
     <div className={darkMode ? "app-dark-mode" : "App"}>
       <div className='app-container'>
@@ -67,13 +94,16 @@ function App() {
            jobs={jobs.filter(job => job.status === 'Need to Start')} 
            deleteJob={deleteJob}
           updateJobStatus={updateJobStatus}
+          editJob={editJob}
         />
         <JobColumn 
           imageIcon = {inProgressimg}  
            status = 'Work in progress' 
            jobs={jobs.filter(job => job.status === 'Work in progress')} 
            deleteJob={deleteJob}
-          updateJobStatus={updateJobStatus}
+           updateJobStatus={updateJobStatus}
+          editJob={editJob}
+
          />
         <JobColumn 
         imageIcon = {done}  
@@ -81,6 +111,8 @@ function App() {
           jobs={jobs.filter(job => job.status === 'Completed')} 
          deleteJob={deleteJob}
          updateJobStatus={updateJobStatus}
+        editJob={editJob}
+
        />
       </main>
      <Footer />
