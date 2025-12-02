@@ -2,6 +2,7 @@ import React, {useState}from 'react';
 import { FormButton } from './FormButton';
 import deleteImg from '../images/delete-icon.png'
 import './JobStatus.css';
+
 export const JobStatus = ({job, deleteJob, updateJobStatus, editJob}) => {
 
  // Add a feature to edit existing jobs.
@@ -43,45 +44,46 @@ const handleSave =() => {
         </div>
        ) : (
         <>
-           <p className='textArticle'>
-          <strong>{job.title}</strong>
-          <span className='category-badge'>{job.category}</span>
-          ({job.status})
-      </p>
-      <div className='jobBox'>
-        <div className='jobStatBox'>
 
-        <select value={job.status}  onChange={handleStatuschange}>
-            <option value="Need to Start">Need to Start</option>
-            <option value="Work in progress">Work in progress</option>
-            <option value="Completed">Completed</option>
-         </select>
+            <p className='textArticle'>
+                  <strong>Lorem Ipsum</strong> <br />
+                  <strong className='tag'>{job.title}</strong>
+                  {/* <span className='category-badge'>{job.category}</span> */}
+                  {/* ({job.status}) */}
+            </p>
+            <div className='jobBox'>
+              <div className='jobStatBox'>
 
-          {job.status === 'Need to Start' && (
-            <FormButton
-                value='Start'
+              <select value={job.status}  onChange={handleStatuschange}>
+                  <option value="Need to Start">Need to Start</option>
+                  <option value="Work in progress">Work in progress</option>
+                  <option value="Completed">Completed</option>
+              </select>
+
+                {job.status === 'Need to Start' && (
+                  <FormButton
+                      value='Start'
+                      onClick={() => {
+                      console.log('Updating job: ', job.id, 'to Work in progress');
+                      updateJobStatus(job.id, 'Work in progress');
+                      editJob={editJob}
+                    }}
+                  />
+                )}
+            
+              </div>
+
+              <button className='edit-btn' onClick={() => setIsEditing(true)}>Edit</button>
+          
+              <div className='jobDelete'>
+                <img src={deleteImg} alt='delete icon' className='deleteImage'
                 onClick={() => {
-                console.log('Updating job: ', job.id, 'to Work in progress');
-                updateJobStatus(job.id, 'Work in progress');
-                editJob={editJob}
-              }}
-            />
-          )}
-       
-        </div>
-
-         <button className='edit-btn' onClick={() => setIsEditing(true)}>Edit</button>
-    
-        <div className='jobDelete'>
-          <img src={deleteImg} alt='delete icon' className='deleteImage'
-           onClick={() => {
-            console.log('Deleting job:', job.id);
-            deleteJob(job.id);
-           }}
-          />
-        </div>
-      </div>
-
+                  console.log('Deleting job:', job.id);
+                  deleteJob(job.id);
+                }}
+                />
+            </div>
+          </div>
         </>
        )}
        

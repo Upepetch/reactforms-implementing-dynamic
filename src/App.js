@@ -16,7 +16,7 @@ function App() {
 
  const [jobs, setJobs] = useState([
   {id: crypto.randomUUID(), title: 'Parse Emails', status: 'Need to Start'},
-  {id: crypto.randomUUID(), title: 'SAP Extraction', status: 'Work in progress'},
+   {id: crypto.randomUUID(), title: 'SAP Extraction', status: 'Work in progress'},
   {id: crypto.randomUUID(), title: 'Generate Reports', status: 'Completed'}
 
  ]);

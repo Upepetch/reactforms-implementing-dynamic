@@ -25,15 +25,23 @@ html, body{
   display: flex;
 }
 
-.category-badge {
-  /* background-color: #e0fff0; */
+/* .category-badge {
   color: #0077cc;
   padding: 2px 40px;
   border: 1px solid #000;
   font-size: 0.6rem;
   margin-left: 6px;
-}
+  Alternativelly👇 
+} */
 
+
+.category-badge {
+  font-size: 12px;
+  background-color: rgb(8, 124, 116);
+  font-weight: 300;
+  padding: 4px 10px; 
+  margin-right: 10px;
+}
 
 .jobStatBox {
   background: #fff;

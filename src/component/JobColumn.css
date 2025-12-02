@@ -6,15 +6,8 @@ html, body{
   box-sizing: border-box;
   /* margin: 0; - to reset */
 }
-/* Column styles */
 
-/* 
-.header-func {
-  display: flex;
-  justify-content: space-between;
-  margin: 40px 0px 0px 0px;
-  padding: 30px 8%;
-} */
+/* Column styles */
 
 .header-func {
   display: grid;
@@ -33,12 +26,6 @@ html, body{
   transition: backround-color 0.8s ease, transform 0.6s ease;
 }
 
-
-/* 
-.column1 {
-  width: 33.33%;
-  margin: 40px;
-} */
 
 .status-image {
   width: 44px;

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './AppForm.css';
-import { FormButton } from './FormButton';
+import { CategorySelector } from './CategorySelector';
 
 // Define the initial state once
 const initialJobDetails = {
@@ -15,7 +15,7 @@ export const AppForm = ({addNewJob}) => {
 
  // Disable the submit button if any field is empty.
  const isFormValid = 
-    jobDetails.title.trim().length >= 0 &&
+    jobDetails.title.trim().length >= 3 &&
     jobDetails.category &&
     jobDetails.status;
 
@@ -24,19 +24,19 @@ export const AppForm = ({addNewJob}) => {
  // Add visual feedback when a job is successfully added (e.g., a success message).
  const [success, setSuccess] = useState('');
 
- const categories = ['Read Emails', 'Web Parsing', 'Send Emails'];
+//  const categories = ['Read Emails', 'Web Parsing', 'Send Emails'];
  const statuses = ['Need to Start', 'Work in progress', 'Completed'];
 
  // Function to reset the form
  const resetForm = () => {
   setJobDetails(initialJobDetails);
-  setError('');
+  setError({});
  };
 
 
  const handleInputChange = (e) => {
   const {name, value} = e.target;
-  setJobDetails(prev => ({
+  setJobDetails((prev) => ({
     ...prev,
     [name] : value
   }));
@@ -62,7 +62,7 @@ export const AppForm = ({addNewJob}) => {
     newErrors.category = 'Please select a category.';
   }
   if (!jobDetails.status) {
-    newErrors.category = 'Please select a status.';
+    newErrors.status = 'Please select a status.';
   }
   if (Object.keys(newErrors).length > 0) {
     setError(newErrors);
@@ -93,36 +93,32 @@ export const AppForm = ({addNewJob}) => {
             />
 
             <div className='form-details'>
-                <div className='bottom-line'>
-                  {categories.map(cat => (
-                    <FormButton 
-                      key={cat}
-                      value={cat}
-                      selected={jobDetails.category === cat}
-                      onClick={() => {
-                        setJobDetails(prev => ({...prev, category: cat}));
+                <div className='bottom-line'>    
+                  <CategorySelector
+                      selectedCategory={jobDetails.category}
+                      onCategorySelect={(cat) => {
+                        setJobDetails((prev) => ({ ...prev, category: cat }))
                         setError({});
                       }}
-                    />
+                  />
+                  </div>
+                  <select 
+                    name='status'
+                    className='job-status'
+                    value={jobDetails.status}
+                    onChange={handleInputChange}
+                  >
+                    {statuses.map(st => (
+                      <option key={st} value={st}>{st}</option>
                     ))}
-                </div>
-                <select 
-                  name='status'
-                  className='job-status'
-                  value={jobDetails.status}
-                  onChange={handleInputChange}
-                >
-                   {statuses.map(st => (
-                     <option key={st} value={st}>{st}</option>
-                   ))}
-                   
-                </select>
-                <button 
-                    type='submit'
-                    disabled={!isFormValid} 
-                    className={`submit-data ${!isFormValid ? 'disabled' : ''}`}
-                >
-                  Add Job
+                    
+                  </select>
+                  <button 
+                      type='submit'
+                      disabled={!isFormValid} 
+                      className={`submit-data ${!isFormValid ? 'disabled' : ''}`}
+                  >
+                    Add Job
                 </button>
             </div>
 
